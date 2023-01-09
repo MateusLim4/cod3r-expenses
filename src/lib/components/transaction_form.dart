@@ -17,11 +17,11 @@ class _TransactionFormState extends State<TransactionForm> {
   _submitForm() {
     final title = titleController.text;
     final value = double.tryParse(valueController.text);
-    widget.onSubmit!(title, value!);
 
-    if (title.isEmpty || value <= 0) {
+    if (title.isEmpty || value! <= 0) {
       return;
     }
+    widget.onSubmit!(title, value);
   }
 
   @override
@@ -50,7 +50,8 @@ class _TransactionFormState extends State<TransactionForm> {
                       onPressed: _submitForm,
                       child: Text(
                         "Nova transação",
-                        style: TextStyle(color: Colors.purple),
+                        style: TextStyle(
+                            color: Theme.of(context).colorScheme.primary),
                       )),
                 ],
               )

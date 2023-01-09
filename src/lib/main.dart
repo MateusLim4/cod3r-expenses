@@ -1,4 +1,5 @@
 import 'dart:math';
+import 'package:cod3r_expenses/assets/fonts/fonts.dart';
 import 'package:flutter/material.dart';
 import 'components/transaction_form.dart';
 import 'components/transaction_list.dart';
@@ -11,9 +12,19 @@ class ExpensesApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    final ThemeData tema = ThemeData();
+    return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: HomePage(),
+      theme: tema.copyWith(
+        colorScheme: tema.colorScheme.copyWith(
+          primary: Colors.purple,
+          secondary: Colors.amber,
+        ),
+        textTheme: tema.textTheme.copyWith(
+          headline6: Fonts().quicksandBold,
+        ),
+      ),
+      home: const HomePage(),
     );
   }
 }
@@ -50,6 +61,9 @@ class _HomePageState extends State<HomePage> {
     setState(() {
       _transactions.add(newTransaction);
     });
+
+    //Hide modal after form submission.
+    Navigator.of(context).pop();
   }
 
   void _openTransactionFormModal(BuildContext context) async {
@@ -67,7 +81,7 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       appBar: AppBar(
         title: const Text("Despesas Pessoais"),
-        backgroundColor: Colors.purple,
+        backgroundColor: Theme.of(context).colorScheme.primary,
         actions: [
           IconButton(
             onPressed: () => _openTransactionFormModal(context),
@@ -91,7 +105,7 @@ class _HomePageState extends State<HomePage> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () => _openTransactionFormModal(context),
-        backgroundColor: Colors.amber,
+        backgroundColor: Theme.of(context).colorScheme.secondary,
         child: const Icon(Icons.add),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
