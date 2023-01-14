@@ -1,57 +1,62 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import '../assets/fonts/fonts.dart';
 import '../models/transaction.dart';
 
 class TransactionList extends StatelessWidget {
   final List<Transaction> transactions;
 
-  TransactionList({Key? key, required this.transactions}) : super(key: key);
+  const TransactionList({Key? key, required this.transactions})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: 300,
-      child: ListView.builder(
-        itemCount: transactions.length,
-        itemBuilder: (context, index) {
-          final tr = transactions[index];
-          return Card(
-            child: Row(children: [
-              Container(
-                margin:
-                    const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-                decoration: BoxDecoration(
-                  border: Border.all(color: Colors.purple[200]!, width: 2),
-                ),
-                padding: const EdgeInsets.all(10),
-                child: Text(
-                  'R\$ ${tr.value.toStringAsFixed(2)}',
-                  style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 20,
-                      color: Colors.purple),
-                ),
+    return transactions.isEmpty
+        ? Column(
+            children: [
+              Text("Nenhuma transação Cadastrada!",
+                  style: Fonts().quicksandBold),
+              const SizedBox(
+                height: 20,
               ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    tr.title,
-                    style: const TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 16,
+              SizedBox(
+                  height: 200,
+                  child: Image.asset(
+                    "lib/assets/images/waiting.png",
+                    fit: BoxFit.cover,
+                  )),
+            ],
+          )
+        : SizedBox(
+            height: 600,
+            child: ListView.builder(
+              itemCount: transactions.length,
+              itemBuilder: (context, index) {
+                final tr = transactions[index];
+                return Card(
+                  elevation: 5,
+                  margin:
+                      const EdgeInsets.symmetric(vertical: 8, horizontal: 5),
+                  child: ListTile(
+                    leading: CircleAvatar(
+                      backgroundColor: Theme.of(context).colorScheme.primary,
+                      radius: 30,
+                      child: Padding(
+                        padding: const EdgeInsets.all(6.0),
+                        child: FittedBox(
+                          child: Text("R\$${tr.value}"),
+                        ),
+                      ),
                     ),
+                    title: Text(
+                      tr.title,
+                      style: Fonts().cardText,
+                    ),
+                    subtitle: Text(DateFormat('d MMMM y').format(tr.date)),
                   ),
-                  Text(
-                    DateFormat('d MMM, y').format(tr.date),
-                    style: const TextStyle(color: Colors.grey),
-                  ),
-                ],
-              )
-            ]),
+                );
+              },
+            ),
           );
-        },
-      ),
-    );
   }
 }

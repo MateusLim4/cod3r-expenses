@@ -1,6 +1,7 @@
 import 'dart:math';
-import 'package:cod3r_expenses/assets/fonts/fonts.dart';
+import '../assets/fonts/fonts.dart';
 import 'package:flutter/material.dart';
+import 'components/chart.dart';
 import 'components/transaction_form.dart';
 import 'components/transaction_list.dart';
 import 'models/transaction.dart';
@@ -21,7 +22,7 @@ class ExpensesApp extends StatelessWidget {
           secondary: Colors.amber,
         ),
         textTheme: tema.textTheme.copyWith(
-          headline6: Fonts().quicksandBold,
+          headline6: TextStyle(fontFamily: Fonts().quicksandBold.fontFamily),
         ),
       ),
       home: const HomePage(),
@@ -37,19 +38,36 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  final _transactions = [
+  final List<Transaction> _transactions = [
     Transaction(
-        id: 't1',
-        title: 'Tênis de corrida',
-        value: 307.76,
-        date: DateTime.now()),
+      id: 't0',
+      title: 'Conta de Agua',
+      value: 80.30,
+      date: DateTime.now().subtract(const Duration(days: 33)),
+    ),
+    Transaction(
+      id: 't1',
+      title: 'Tênis de corrida',
+      value: 307.76,
+      date: DateTime.now().subtract(const Duration(days: 3)),
+    ),
     Transaction(
       id: 't2',
       title: 'Conta de Luz',
       value: 200.30,
-      date: DateTime.now(),
+      date: DateTime.now().subtract(const Duration(days: 3)),
     ),
   ];
+
+  List<Transaction> get _recentTransactions {
+    return _transactions.where((tr) {
+      return tr.date.isAfter(
+        DateTime.now().subtract(
+          const Duration(days: 7),
+        ),
+      );
+    }).toList();
+  }
 
   _addTransaction(String title, double value) {
     final newTransaction = Transaction(
@@ -93,12 +111,7 @@ class _HomePageState extends State<HomePage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            const SizedBox(
-              width: double.infinity,
-              child: Card(
-                child: Text("Gráfico"),
-              ),
-            ),
+            Chart(recentTransactions: _recentTransactions),
             TransactionList(transactions: _transactions),
           ],
         ),
