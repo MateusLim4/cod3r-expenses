@@ -40,56 +40,62 @@ class _TransactionFormState extends State<TransactionForm> {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-        elevation: 5,
-        child: Padding(
-          padding: const EdgeInsets.all(10.0),
-          child: Column(
-            children: [
-              TextField(
-                decoration: const InputDecoration(labelText: 'Título'),
-                controller: _titleController,
-                onSubmitted: (_) => _submitForm(),
-              ),
-              TextField(
-                decoration: const InputDecoration(labelText: 'Valor (R\$)'),
-                keyboardType: TextInputType.number,
-                controller: _valueController,
-                onSubmitted: (_) => _submitForm(),
-              ),
-              SizedBox(
-                height: 80,
-                child: Row(
-                  children: [
-                    Expanded(
-                      child: Text(_selectedDate == null
-                          ? "Nenhuma data selecionada!"
-                          : 'Data selecionada: ${DateFormat('dd/MM/y').format(_selectedDate!)}'),
-                    ),
-                    TextButton(
-                        onPressed: _showDatePicker,
-                        child: const Text(
-                          'Selecionar Data',
-                          style: TextStyle(fontWeight: FontWeight.bold),
-                        ))
-                  ],
+    return SingleChildScrollView(
+      child: Card(
+          elevation: 5,
+          child: Padding(
+            padding: EdgeInsets.only(
+                top: 10,
+                right: 10,
+                left: 10,
+                bottom: 10 + MediaQuery.of(context).viewInsets.bottom),
+            child: Column(
+              children: [
+                TextField(
+                  decoration: const InputDecoration(labelText: 'Título'),
+                  controller: _titleController,
+                  onSubmitted: (_) => _submitForm(),
                 ),
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  ElevatedButton(
-                    onPressed: _submitForm,
-                    child: const Text(
-                      "Nova Transação",
-                      style: TextStyle(
-                          color: Colors.white, fontWeight: FontWeight.bold),
-                    ),
-                  )
-                ],
-              )
-            ],
-          ),
-        ));
+                TextField(
+                  decoration: const InputDecoration(labelText: 'Valor (R\$)'),
+                  keyboardType: TextInputType.number,
+                  controller: _valueController,
+                  onSubmitted: (_) => _submitForm(),
+                ),
+                SizedBox(
+                  height: 80,
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: Text(_selectedDate == null
+                            ? "Nenhuma data selecionada!"
+                            : 'Data selecionada: ${DateFormat('dd/MM/y').format(_selectedDate!)}'),
+                      ),
+                      TextButton(
+                          onPressed: _showDatePicker,
+                          child: const Text(
+                            'Selecionar Data',
+                            style: TextStyle(fontWeight: FontWeight.bold),
+                          ))
+                    ],
+                  ),
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    ElevatedButton(
+                      onPressed: _submitForm,
+                      child: const Text(
+                        "Nova Transação",
+                        style: TextStyle(
+                            color: Colors.white, fontWeight: FontWeight.bold),
+                      ),
+                    )
+                  ],
+                )
+              ],
+            ),
+          )),
+    );
   }
 }
