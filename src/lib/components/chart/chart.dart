@@ -1,4 +1,4 @@
-import 'package:cod3r_expenses/components/chart_bar.dart';
+import 'package:cod3r_expenses/components/chart/chart_bar.dart';
 import 'package:cod3r_expenses/models/transaction.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';

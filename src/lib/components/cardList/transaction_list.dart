@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import '../assets/fonts/fonts.dart';
-import '../models/transaction.dart';
+import '../../assets/fonts/fonts.dart';
+import '../../models/transaction.dart';
 
 class TransactionList extends StatelessWidget {
   final List<Transaction> transactions;
@@ -28,7 +28,7 @@ class TransactionList extends StatelessWidget {
                   height: constraints.maxHeight * 0.1,
                 ),
                 SizedBox(
-                    height: constraints.maxHeight * 0.6,
+                    height: constraints.maxHeight * 0.4,
                     child: Image.asset(
                       "lib/assets/images/waiting.png",
                       fit: BoxFit.cover,
