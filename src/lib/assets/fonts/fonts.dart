@@ -34,13 +34,13 @@ class Fonts implements IFonts {
   TextStyle get quicksandMedium => GoogleFonts.quicksand(
         fontWeight: FontWeight.normal,
         fontSize: 18,
-        color: Colors.black,
+        color: Colors.white,
       );
 
   @override
   TextStyle get quicksandBold => GoogleFonts.quicksand(
         fontWeight: FontWeight.bold,
         fontSize: 18,
-        color: Colors.black,
+        color: Colors.white,
       );
 }
