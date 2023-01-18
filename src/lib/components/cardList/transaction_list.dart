@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import '../../assets/fonts/fonts.dart';
 import '../../models/transaction.dart';
+import 'transaction_item_state.dart';
 
 class TransactionList extends StatelessWidget {
   final List<Transaction> transactions;
@@ -42,52 +42,21 @@ class TransactionList extends StatelessWidget {
               itemCount: transactions.length,
               itemBuilder: (context, index) {
                 final tr = transactions[index];
-                return Card(
-                  elevation: 5,
-                  margin:
-                      const EdgeInsets.symmetric(vertical: 8, horizontal: 5),
-                  child: ListTile(
-                    trailing: mediaQuery.size.width > 400
-                        ? TextButton.icon(
-                            onPressed: () => onRemove(tr.id),
-                            icon: const Icon(
-                              Icons.delete,
-                              color: Colors.grey,
-                            ),
-                            label: const Text(
-                              "Excluir",
-                              style: TextStyle(color: Colors.grey),
-                            ),
-                          )
-                        : IconButton(
-                            icon: const Icon(
-                              Icons.delete,
-                              color: Colors.grey,
-                            ),
-                            onPressed: (() => onRemove(tr.id)),
-                          ),
-                    leading: CircleAvatar(
-                      backgroundColor: Theme.of(context).colorScheme.primary,
-                      radius: 30,
-                      child: Padding(
-                        padding: const EdgeInsets.all(6.0),
-                        child: FittedBox(
-                          child: Text(
-                            "R\$${tr.value.toStringAsFixed(2)}",
-                            style: Fonts().quicksandBold,
-                          ),
-                        ),
-                      ),
-                    ),
-                    title: Text(
-                      tr.title,
-                      style: Fonts().cardText,
-                    ),
-                    subtitle: Text(DateFormat('d MMMM y').format(tr.date)),
-                  ),
+                return TransactionItemState(
+                  key: GlobalObjectKey(tr),
+                  onRemove: onRemove,
+                  tr: tr,
                 );
               },
             ),
+            // child: ListView(
+            //     children: transactions.map((tr) {
+            //   return TransactionItemState(
+            //       key: ValueKey(tr.id),
+            //       mediaQuery: mediaQuery,
+            //       onRemove: onRemove,
+            //       tr: tr);
+            // }).toList()),
           );
   }
 }
